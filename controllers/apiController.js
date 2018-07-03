@@ -1,7 +1,4 @@
-const express = require('express'),
-    router = express.Router();
-
-const data = [
+const blogs = [
     {
         id: 1,
         title: 'Heading One',
@@ -24,21 +21,9 @@ const data = [
     }
 ];
 
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express App' });
-});
-
-router.get('/blog', (req, res, next) => {
-    res.render('blog/index', {
-        items : data
+exports.blogs = (req, res) => {
+    res.json({
+        status: 'success',
+        blogs: blogs,
     })
-});
-
-router.get('/blog/:id', (req, res, next) => {
-    res.render('blog/details', {
-        item : data[req.params.id - 1]
-    })
-});
-
-
-module.exports = router;
+};
