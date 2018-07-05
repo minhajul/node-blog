@@ -1,8 +1,8 @@
-const blogs = require('../data/blogs.json');
+const blog = require('../data/blogs.json');
 
-exports.blogs = async (req, res) => {
+exports.fetchBlog = async (req, res) => {
     res.json({
         status: 'success',
-        blogs
+        blog
     })
 };

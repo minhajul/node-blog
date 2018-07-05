@@ -11,7 +11,7 @@ const partialsDir = __dirname + '/views/partials';
 
 const filenames = fs.readdirSync(partialsDir);
 
-filenames.forEach(function (filename) {
+filenames.forEach((filename) => {
     let matches = /^([^.]+).hbs$/.exec(filename);
     if (!matches) {
         return;
@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
+// routes
 const index = require('./routes/index');
 const users = require('./routes/users');
 const api = require('./routes/api');
