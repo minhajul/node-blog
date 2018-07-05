@@ -1,22 +1,15 @@
 const express = require('express'),
     router = express.Router(),
-    homeController = require('../controllers/homeController');
+    homeController = require('../controllers/homeController'),
+    blogController = require('../controllers/blogController');
 
 const data = require('../data/blogs');
 
 router.get('/', homeController.home);
 
-router.get('/blog', (req, res, next) => {
-    res.render('blog/index', {
-        items : data
-    })
-});
+router.get('/blog', blogController.index);
 
-router.get('/blog/:id', (req, res, next) => {
-    res.render('blog/details', {
-        item : data[req.params.id - 1]
-    })
-});
+router.get('/blog/:id', blogController.details);
 
 
 module.exports = router;
