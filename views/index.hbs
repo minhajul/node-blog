@@ -1,12 +1,10 @@
 
 <div class="row">
-    <div class="row">
-        {{#each blogs }}
-            <div class="col-md-4">
-                <h2>{{ title }}</h2>
-                <p>{{ body }}</p>
-                <p><a class="btn btn-secondary" href="/blog/{{ id }}" role="button">View details &raquo;</a></p>
-            </div>
-        {{/each }}
-    </div>
+    {{#each blogs }}
+        <div class="col-md-4">
+            <h2>{{ title }}</h2>
+            <p>{{ body }}</p>
+            <p><a class="btn btn-secondary" href="/blog/{{ id }}" role="button">View details &raquo;</a></p>
+        </div>
+    {{/each }}
 </div>

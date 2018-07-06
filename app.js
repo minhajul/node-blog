@@ -9,9 +9,9 @@ const fs = require('fs');
 
 const partialsDir = __dirname + '/views/partials';
 
-const filenames = fs.readdirSync(partialsDir);
+const fileNames = fs.readdirSync(partialsDir);
 
-filenames.forEach((filename) => {
+fileNames.forEach((filename) => {
     let matches = /^([^.]+).hbs$/.exec(filename);
     if (!matches) {
         return;
@@ -21,7 +21,6 @@ filenames.forEach((filename) => {
     hbs.registerPartial(name, template);
 });
 
-
 const app = express();
 
 // view engine setup
@@ -30,7 +29,7 @@ app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
