@@ -1,2 +1,2 @@
-# node-blog
-A simple blog using Node.js
+# My Portfolio Website
+A simple website built with Node.js, Express.js.
