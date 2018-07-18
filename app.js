@@ -35,10 +35,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 const index = require('./routes/index');
+const auth = require('./routes/auth');
 const users = require('./routes/users');
 const api = require('./routes/api');
 
 app.use('/', index);
+app.use('/auth', auth);
 app.use('/users', users);
 app.use('/api/v1', api);
 
