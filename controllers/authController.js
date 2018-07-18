@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
 
 const users = [
-    {id: 1, username: "minhaj", password: "123456"},
-    {id: 1, username: "sohel", password: "123456"}
+    {id: 1, email: "minhaj@gmail.com", password: "123456"},
+    {id: 2, email: "minhajul@maya.com.bd", password: "123456"},
+    {id: 3, email: "sohel@gmail.com", password: "123456"}
 ];
 
 exports.loginView = (req, res) => {
@@ -11,15 +12,16 @@ exports.loginView = (req, res) => {
 
 
 exports.login = async (req, res) => {
-    const username = req.body.username,
+    const email = req.body.email,
         password = req.body.password;
 
-    if (!username || !password) {
+
+    if (!email || !password) {
         sendErrorResponse(res, 500, 'failure', 'Authentication failed. Please try again!');
     }
 
     const user = users.find(user => {
-        return user.username === username && user.password === password;
+        return user.email === email && user.password === password;
     });
 
     if (!user){
@@ -28,7 +30,7 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign({
         sub: user.id,
-        username: user.username
+        email: user.email
     }, "my-secret-keys", {expiresIn: "3 hours"});
 
     res.status(200)
