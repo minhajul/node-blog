@@ -10,11 +10,9 @@ exports.loginView = (req, res) => {
     res.render('pages/auth/index');
 };
 
-
 exports.login = async (req, res) => {
     const email = req.body.email,
-        password = req.body.password;
-
+          password = req.body.password;
 
     if (!email || !password) {
         sendErrorResponse(res, 500, 'failure', 'Authentication failed. Please try again!');
