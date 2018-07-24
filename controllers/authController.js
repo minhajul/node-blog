@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 
+const { validationResult } = require('express-validator/check');
+
 const users = [
     {id: 1, email: "minhaj@gmail.com", password: "123456"},
     {id: 2, email: "minhajul@maya.com.bd", password: "123456"},
@@ -11,12 +13,15 @@ exports.loginView = (req, res) => {
 };
 
 exports.login = async (req, res) => {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+
     const email = req.body.email,
           password = req.body.password;
-
-    if (!email || !password) {
-        sendErrorResponse(res, 500, 'failure', 'Authentication failed. Please try again!');
-    }
 
     const user = users.find(user => {
         return user.email === email && user.password === password;
