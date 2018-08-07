@@ -17,7 +17,8 @@ exports.login = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
+        // res.redirect('/auth/login');
+        return res.status(422).json({ errors: errors.array()});
     }
 
     const email = req.body.email,
