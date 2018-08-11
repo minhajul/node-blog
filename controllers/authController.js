@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-
-const { validationResult } = require('express-validator/check');
+const Joi = require('joi');
 
 const users = [
     {id: 1, email: "minhaj@gmail.com", password: "123456"},
@@ -14,11 +13,16 @@ exports.loginView = (req, res) => {
 
 exports.login = async (req, res) => {
 
-    const errors = validationResult(req);
+    const schema = {
+        email : Joi.string().required(),
+        password : Joi.string().min(3).required()
+    };
 
-    if (!errors.isEmpty()) {
-        // res.redirect('/auth/login');
-        return res.status(422).json({ errors: errors.array()});
+
+    const result = Joi.validate(req.body, schema);
+
+    if(result.error){
+        return res.status(422).json({ errors: result.error.details});
     }
 
     const email = req.body.email,
