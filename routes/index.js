@@ -9,5 +9,4 @@ router.get('/blog', blogController.index);
 
 router.get('/blog/:id', blogController.details);
 
-
 module.exports = router;

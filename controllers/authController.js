@@ -12,12 +12,10 @@ exports.loginView = (req, res) => {
 };
 
 exports.login = async (req, res) => {
-
     const schema = {
         email : Joi.string().required(),
         password : Joi.string().min(3).required()
     };
-
 
     const result = Joi.validate(req.body, schema);
 

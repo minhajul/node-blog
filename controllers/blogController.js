@@ -8,7 +8,6 @@ firebaseAdmin.initializeApp({
 });
 
 exports.index = async (req, res) => {
-
     const posts = await getPosts().then(snap => snap);
 
     res.render('blog/index', {
