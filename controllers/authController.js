@@ -13,7 +13,6 @@ exports.loginView = (req, res) => {
 };
 
 exports.emailLogin = async (req, res) => {
-
     const user = await User.findOne({email: req.body.email, password: req.body.password});
 
     if (!user){
@@ -25,6 +24,18 @@ exports.emailLogin = async (req, res) => {
     res.redirect('/');
 };
 
+
+exports.logout = async (req, res, next) => {
+    if (req.session) {
+        req.session.destroy((err) => {
+            if(err) {
+                return next(err);
+            }
+
+            return res.redirect('/');
+        });
+    }
+};
 
 exports.login = async (req, res) => {
     const schema = {
