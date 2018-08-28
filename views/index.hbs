@@ -1,10 +1,10 @@
 
 <div class="row">
-    {{#each blogs }}
+    {{#each posts }}
         <div class="col-md-4">
             <h2>{{ title }}</h2>
-            <p>{{ body }}</p>
-            <p><a class="" href="/blog/{{ id }}" role="button">View more...</a></p>
+            <p>{{ details }}</p>
+            <p><a class="" href="/blog/{{ _id }}" role="button">View more...</a></p>
         </div>
     {{/each }}
 </div>

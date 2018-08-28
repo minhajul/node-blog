@@ -3,7 +3,7 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
+const mongoose = require('mongoose');
 const hbs = require('hbs');
 const fs = require('fs');
 
@@ -22,6 +22,15 @@ fileNames.forEach((filename) => {
 });
 
 const app = express();
+
+mongoose.connect('mongodb://localhost:27017/blogs')
+    .then(() => console.log('Connected to Mongodb'))
+    .catch((error) => console.error('Error while connecting to mongodb'+ error));
+
+//load all files in models dir
+fs.readdirSync(__dirname + '/models').forEach(function(filename) {
+    if (~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
