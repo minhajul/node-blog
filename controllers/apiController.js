@@ -1,8 +1,10 @@
-const blog = require('../data/blogs.json');
+const Post = require('../models/Post');
 
-exports.fetchBlog = async (req, res) => {
+exports.fetchPosts = async (req, res) => {
+    const posts = await Post.find().sort({_id: -1}).select({_id:1, title:1, details:1, created_at:1});
+
     res.json({
         status: 'success',
-        blog
+        posts
     })
 };
