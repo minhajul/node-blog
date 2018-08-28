@@ -1,7 +1,7 @@
 const Post = require('../models/Post');
 
-exports.index =  (req, res) => {
-    const posts = getPosts();
+exports.index = async (req, res) => {
+    const posts = await Post.find();
 
     res.render('post/index', {
         posts
@@ -9,11 +9,9 @@ exports.index =  (req, res) => {
 };
 
 exports.details = async (req, res) => {
+    const post = await Post.findById(req.params.id);
+
     res.render('post/details', {
-        blog : blogs[req.params.id - 1]
+        post
     })
 };
-
-async function getPosts(){
-    return await Post.find();
-}
