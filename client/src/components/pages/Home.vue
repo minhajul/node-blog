@@ -6,13 +6,15 @@
       <Single v-bind:post="post" :key="post._id"></Single>
     </div>
 
+    <div class="col-md-12" v-if="errorMessage">{{ errorMessage }}</div>
+
   </div>
 
 </template>
 
 <script>
   import axios from 'axios';
-  import Single from '../posts/Single';
+  import Single from '../Single';
   export default {
     name: 'Home',
     components:{
@@ -30,29 +32,11 @@
           .then(responseData => {
               if (responseData.data.status === 'success'){
                 this.posts = responseData.data.posts;
+              }else{
+                this.errorMessage = 'No post found'
               }
           })
            .catch(error => this.errorMessage = 'No post found'+ error.message);
     }
   }
 </script>
-
-<style scoped>
-  h1, h2 {
-    font-weight: normal;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-
-  a {
-    color: #42b983;
-  }
-</style>

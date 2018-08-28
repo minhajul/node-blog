@@ -2,13 +2,11 @@
 
   <div class="row">
 
-    <div class="col-md-12">
-        <Single v-bind:post="post" :key="post._id"></Single>
-
-      <div class="error-message" v-if="errorMessage">
-         {{ errorMessage }}
-      </div>
+    <div class="col-md-6" v-for="post in posts">
+      <Single v-bind:post="post" :key="post._id"></Single>
     </div>
+
+    <div class="col-md-12" v-if="errorMessage">{{ errorMessage }}</div>
 
   </div>
 
@@ -18,22 +16,22 @@
   import axios from 'axios';
   import Single from '../Single';
   export default {
-    name: 'PostDetails',
+    name: 'Posts',
     components:{
       Single
     },
     data() {
       return {
-        post: {},
+        posts: [],
         errorMessage: null
       }
     },
     mounted(){
-      axios.get('http://localhost:3000/api/v1/post/'+ this.$route.params.id)
+      axios.get('http://localhost:3000/api/v1/posts')
         .then(response => response)
         .then(responseData => {
           if (responseData.data.status === 'success'){
-            this.post = responseData.data.post;
+            this.posts = responseData.data.posts;
           }else{
             this.errorMessage = 'No post found'
           }
@@ -42,3 +40,4 @@
     }
   }
 </script>
+
