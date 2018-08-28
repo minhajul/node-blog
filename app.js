@@ -3,23 +3,24 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const mongoose = require('mongoose');
 const hbs = require('hbs');
 const fs = require('fs');
 
-const partialsDir = __dirname + '/views/partials';
-
-const fileNames = fs.readdirSync(partialsDir);
-
-fileNames.forEach((filename) => {
-    let matches = /^([^.]+).hbs$/.exec(filename);
-    if (!matches) {
-        return;
-    }
-    let name = matches[1];
-    let template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
-    hbs.registerPartial(name, template);
-});
+// const partialsDir = __dirname + '/views/partials';
+//
+// const fileNames = fs.readdirSync(partialsDir);
+//
+// fileNames.forEach((filename) => {
+//     let matches = /^([^.]+).hbs$/.exec(filename);
+//     if (!matches) {
+//         return;
+//     }
+//     let name = matches[1];
+//     let template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
+//     hbs.registerPartial(name, template);
+// });
 
 const app = express();
 
@@ -41,8 +42,16 @@ app.use(express.static(__dirname +'/public'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
+app.use(session({
+    secret: 'minhaj',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
 
 // routes
 const index = require('./routes/index');

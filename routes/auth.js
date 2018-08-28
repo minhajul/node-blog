@@ -4,6 +4,6 @@ const express = require('express'),
 
 router.get('/login', authController.loginView);
 
-router.post('/login', authController.login);
+router.post('/login', authController.emailLogin);
 
 module.exports = router;
