@@ -9,5 +9,6 @@ const JwtChecker = expressJWT({
 
 // router.get('/posts', JwtChecker, apiController.fetchPosts);
 router.get('/posts', apiController.fetchPosts);
+router.get('/post/:id', apiController.postDetails);
 
 module.exports = router;

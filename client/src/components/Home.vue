@@ -1,19 +1,21 @@
 <template>
 
   <div class="row">
-    <div class="col-md-6" v-for="post in posts" :key="post._id">
-      <h2>{{ post.title }}</h2>
-      <p>{{ post.details }}</p>
-      <p><a v-bind:href=" '/post/'+ post._id" role="button">View more...</a></p>
-    </div>
+
+    <Single v-for="post in posts" v-bind:post="post" :key="post._id"></Single>
+
   </div>
 
 </template>
 
 <script>
   import axios from 'axios';
+  import Single from './posts/Single';
   export default {
     name: 'Home',
+    components:{
+      Single
+    },
     data() {
       return {
           posts: [],
