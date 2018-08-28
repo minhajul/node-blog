@@ -1,8 +1,16 @@
-const blog = require('../data/blogs.json');
+const Post = require('../models/Post');
 
-exports.fetchBlog = async (req, res) => {
+exports.fetchPosts = async (req, res) => {
+    let page = req.query.page || 1;
+    let query = {
+        skip: 10 * (page - 1),
+        limit: 10
+    };
+
+    const posts = await Post.find({}, {}, query).sort({_id: -1}).select({_id:1, title:1, details:1, created_at:1});
+
     res.json({
         status: 'success',
-        blog
+        posts
     })
 };

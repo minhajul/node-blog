@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
+const User = require('../models/User');
 
 const users = [
     {id: 1, email: "minhaj@gmail.com", password: "123456"},
@@ -9,6 +10,31 @@ const users = [
 
 exports.loginView = (req, res) => {
     res.render('pages/auth/index');
+};
+
+exports.emailLogin = async (req, res) => {
+    const user = await User.findOne({email: req.body.email, password: req.body.password});
+
+    if (!user){
+        res.redirect('/auth/login');
+    }
+
+    req.session.user = user;
+
+    res.redirect('/');
+};
+
+
+exports.logout = async (req, res, next) => {
+    if (req.session) {
+        req.session.destroy((err) => {
+            if(err) {
+                return next(err);
+            }
+
+            return res.redirect('/');
+        });
+    }
 };
 
 exports.login = async (req, res) => {

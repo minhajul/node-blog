@@ -1,12 +1,12 @@
 const express = require('express'),
     router = express.Router(),
     homeController = require('../controllers/homeController'),
-    blogController = require('../controllers/blogController');
+    postController = require('../controllers/postController');
 
 router.get('/', homeController.home);
 
-router.get('/blog', blogController.index);
+router.get('/posts', postController.index);
 
-router.get('/blog/:id', blogController.details);
+router.get('/post/:id', postController.details);
 
 module.exports = router;
