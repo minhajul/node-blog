@@ -2,10 +2,10 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
-const hbs = require('hbs');
 const fs = require('fs');
 
 // const partialsDir = __dirname + '/views/partials';
@@ -51,6 +51,14 @@ app.use(session({
     cookie: {
         expires: 600000
     }
+}));
+
+app.use(cors({
+    'allowedHeaders': ['sessionId', 'Content-Type'],
+    'exposedHeaders': ['sessionId'],
+    'origin': '*',
+    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    'preflightContinue': false
 }));
 
 // routes
