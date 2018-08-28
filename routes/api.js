@@ -7,7 +7,7 @@ const JwtChecker = expressJWT({
     secret: "my-secret-keys"
 });
 
-// router.get('/posts', JwtChecker, apiController.fetchBlog);
+// router.get('/posts', JwtChecker, apiController.fetchPosts);
 router.get('/posts', apiController.fetchPosts);
 
 module.exports = router;
