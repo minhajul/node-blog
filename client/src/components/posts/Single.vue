@@ -1,6 +1,6 @@
 <template>
 
-  <div class="col-md-6">
+  <div class="single-post">
     <h2>{{ item.title }}</h2>
     <p>{{ item.details }}</p>
     <p><a v-bind:href=" '/post/'+ item._id" role="button">View more...</a></p>

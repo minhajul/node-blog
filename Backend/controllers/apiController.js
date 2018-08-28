@@ -18,6 +18,7 @@ exports.fetchPosts = async (req, res) => {
 exports.postDetails = async (req, res) => {
     const post = await Post.findById(req.params.id).select({_id:1, title:1, details:1, created_at:1});
     res.json({
+        status: 'success',
         post
     })
 };

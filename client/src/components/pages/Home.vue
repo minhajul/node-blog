@@ -2,7 +2,9 @@
 
   <div class="row">
 
-    <Single v-for="post in posts" v-bind:post="post" :key="post._id"></Single>
+    <div class="col-md-6" v-for="post in posts">
+      <Single v-bind:post="post" :key="post._id"></Single>
+    </div>
 
   </div>
 
@@ -10,7 +12,7 @@
 
 <script>
   import axios from 'axios';
-  import Single from './posts/Single';
+  import Single from '../posts/Single';
   export default {
     name: 'Home',
     components:{
@@ -30,7 +32,7 @@
                 this.posts = responseData.data.posts;
               }
           })
-          .catch(error => this.errorMessage = 'No post found');
+           .catch(error => this.errorMessage = 'No post found'+ error.message);
     }
   }
 </script>

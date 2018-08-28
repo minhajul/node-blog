@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-import Single from '@/components/posts/Single'
+import Home from '@/components/pages/Home'
+import PostDetails from '@/components/pages/PostDetails'
 
 Vue.use(Router);
 
@@ -16,7 +16,7 @@ export default new Router({
     {
       path: '/post/:id',
       name: 'details',
-      component: Single,
+      component: PostDetails,
     }
   ]
 })
