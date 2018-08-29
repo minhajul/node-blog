@@ -8,27 +8,13 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const fs = require('fs');
 
-// const partialsDir = __dirname + '/views/partials';
-//
-// const fileNames = fs.readdirSync(partialsDir);
-//
-// fileNames.forEach((filename) => {
-//     let matches = /^([^.]+).hbs$/.exec(filename);
-//     if (!matches) {
-//         return;
-//     }
-//     let name = matches[1];
-//     let template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
-//     hbs.registerPartial(name, template);
-// });
-
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/blogs')
     .then(() => console.log('Connected to Mongodb'))
     .catch((error) => console.error('Error while connecting to mongodb'+ error));
 
-//load all files in models dir
+//Load all files in models dir
 fs.readdirSync(__dirname + '/models').forEach(function(filename) {
     if (~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
 });
@@ -84,6 +70,33 @@ app.use((err, req, res, next) => {
 
   res.status(err.status || 500);
   res.render('error');
+});
+
+
+const Chat = require('./models/Chat');
+
+const io = require('socket.io').listen(3000).sockets;
+
+io.on('connection', (socket) => {
+
+    Chat.find().limit(20).sort({_id: 1}).exec( (err, result)=>{
+        if (err){
+            throw err;
+        }else {
+            io.emit('MESSAGE', result);
+        }
+    });
+
+    socket.on('SEND_MESSAGE', (data) => {
+        const newChat = new Chat({
+            message: data.message,
+            user: data.user
+        });
+
+        newChat.save(() => {
+            io.emit('MESSAGE', data)
+        });
+    });
 });
 
 module.exports = app;

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/pages/Home'
 import Posts from '@/components/pages/Posts'
 import PostDetails from '@/components/pages/PostDetails'
+import Chat from '@/components/pages/Chat'
 
 Vue.use(Router);
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/post/:id',
       name: 'details',
       component: PostDetails,
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: Chat,
     }
   ]
 })
