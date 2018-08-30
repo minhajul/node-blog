@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -15,21 +14,14 @@ mongoose.connect('mongodb://localhost:27017/blogs')
     .then(() => console.log('Connected to Mongodb'))
     .catch((error) => console.error('Error while connecting to mongodb'));
 
-//Load all files in models dir
+// Load all files in models dir
 fs.readdirSync(__dirname + '/models').forEach(function(filename) {
     if (~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
 });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-
-app.use(express.static(__dirname +'/public'));
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
 app.use(cors({
@@ -62,7 +54,10 @@ app.use((err, req, res, next) => {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   res.status(err.status || 500);
-  res.render('error');
+  res.json({
+      status: 'failure',
+      code: err.status
+  });
 });
 
 
