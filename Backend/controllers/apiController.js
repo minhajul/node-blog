@@ -2,11 +2,7 @@ const Post = require('../models/Post');
 const Product = require('../models/Product');
 
 exports.fetchPosts = async (req, res) => {
-    let page = req.query.page || 1;
-    let query = {
-        skip: 10 * (page - 1),
-        limit: 10
-    };
+    let query = getQuery(req);
 
     try {
         const posts = await Post.find({}, {}, query).sort({_id: -1}).select({_id:1, title:1, details:1, created_at:1});
@@ -26,11 +22,7 @@ exports.postDetails = async (req, res) => {
 };
 
 exports.fetchProducts = async (req, res) => {
-    let page = req.query.page || 1;
-    let query = {
-        skip: 10 * (page - 1),
-        limit: 10
-    };
+    let query = getQuery(req);
 
     try {
         const products = await Product.find({}, {}, query).sort({_id: -1}).select({_id:1, title:1, description:1, price: 1, image:1, created_at:1});
@@ -61,6 +53,14 @@ exports.create = async (req, res) => {
     await product.save();
 };
 
+
+function getQuery(req) {
+    let page = req.query.page || 1;
+    return {
+        skip: 10 * (page - 1),
+        limit: 10
+    };
+}
 
 function respondSuccess(res, data){
     res.json({
