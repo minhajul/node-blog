@@ -5,7 +5,7 @@
 2. Express.js
 3. MongoDB
 4. Vue.js
-5. Viex.js
+5. Vuex.js
 6. Bootstrap 4
 
 ### Installation Process

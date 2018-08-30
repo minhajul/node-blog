@@ -4,7 +4,6 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const mongoose = require('mongoose');
 const fs = require('fs');
 
@@ -14,7 +13,7 @@ app.listen(3000, () => console.log('App is running on port: 3000'));
 
 mongoose.connect('mongodb://localhost:27017/blogs')
     .then(() => console.log('Connected to Mongodb'))
-    .catch((error) => console.error('Error while connecting to mongodb'+ error));
+    .catch((error) => console.error('Error while connecting to mongodb'));
 
 //Load all files in models dir
 fs.readdirSync(__dirname + '/models').forEach(function(filename) {
@@ -32,14 +31,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
-app.use(session({
-    secret: 'minhaj',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: 600000
-    }
-}));
 
 app.use(cors({
     'allowedHeaders': ['sessionId', 'Content-Type'],
@@ -75,30 +66,27 @@ app.use((err, req, res, next) => {
 });
 
 
-// const Chat = require('./models/Chat');
-//
-// const io = require('socket.io').listen(3000).sockets;
-//
-// io.on('connection', (socket) => {
-//
-//     Chat.find().limit(20).sort({_id: 1}).exec( (err, result)=>{
-//         if (err){
-//             throw err;
-//         }else {
-//             io.emit('MESSAGE', result);
-//         }
-//     });
-//
-//     socket.on('SEND_MESSAGE', (data) => {
-//         const newChat = new Chat({
-//             message: data.message,
-//             user: data.user
-//         });
-//
-//         newChat.save(() => {
-//             io.emit('MESSAGE', data)
-//         });
-//     });
-// });
+const Chat = require('./models/Chat');
+
+const io = require('socket.io').listen(3001).sockets;
+
+io.on('connection', async (socket) => {
+    const messages = await Chat.find().limit(20).sort({_id: 1});
+
+    io.emit('MESSAGES', messages);
+
+    socket.on('SEND_MESSAGE', async (data) => {
+        const newChat = new Chat({
+            message: data.message,
+            user: data.user
+        });
+
+        newChat.save((err, result) => {
+            if (!err){
+                io.emit('MESSAGE', result);
+            }
+        });
+    });
+});
 
 module.exports = app;
