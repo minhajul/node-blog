@@ -10,32 +10,18 @@ exports.fetchPosts = async (req, res) => {
 
     try {
         const posts = await Post.find({}, {}, query).sort({_id: -1}).select({_id:1, title:1, details:1, created_at:1});
-        res.json({
-            status: 'success',
-            posts
-        })
+        return respondSuccess(res, posts);
     }catch (error) {
-        res.json({
-            status: 'failure',
-            error: error.message,
-            posts: []
-        })
+        return respondError(res, error);
     }
 };
 
 exports.postDetails = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id).select({_id:1, title:1, details:1, created_at:1});
-        res.json({
-            status: 'success',
-            post
-        })
+        return respondSuccess(res, post);
     }catch (error) {
-        res.json({
-            status: 'failure',
-            error: error.message,
-            post: null
-        })
+        return respondError(res, error);
     }
 };
 
@@ -48,34 +34,18 @@ exports.fetchProducts = async (req, res) => {
 
     try {
         const products = await Product.find({}, {}, query).sort({_id: -1}).select({_id:1, title:1, description:1, price: 1, image:1, created_at:1});
-
-        res.json({
-            status: 'success',
-            products
-        });
+        return respondSuccess(res, products);
     }catch (error) {
-        res.json({
-            status: 'failure',
-            error: error.message,
-            products: []
-        })
+        return respondError(res, error);
     }
-
 };
 
 exports.productDetails = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id).select({_id:1, title:1, description:1, price: 1, image:1, created_at:1});
-        res.json({
-            status: 'success',
-            product
-        });
+        return respondSuccess(res, product);
     }catch (error) {
-        res.json({
-            status: 'failure',
-            error: error.message,
-            product: null
-        })
+        return respondError(res, error);
     }
 };
 
@@ -90,3 +60,19 @@ exports.create = async (req, res) => {
 
     await product.save();
 };
+
+
+function respondSuccess(res, data){
+    res.json({
+        status: 'success',
+        data: data
+    });
+}
+
+function respondError(res, error){
+    res.status(500).json({
+        status: 'failure',
+        error: error.message,
+        data: null
+    })
+}
