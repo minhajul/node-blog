@@ -1,9 +1,7 @@
 <template>
   <div class="cart-area">
     <h2>Cart</h2>
-
     <hr>
-
     <p v-if="cart.length === 0">
       Your cart is empty!
     </p>
@@ -42,21 +40,17 @@
 </template>
 
 <script>
-    export default {
-        name: "Cart",
-        data(){
-          return {
-            cart: this.$store.getters.getCart
-          }
-        },
-      methods: {
-        removeFromCart(index){
-            this.$store.commit('removeFromCart', index)
-        }
+  export default {
+    name: "Cart",
+    computed:{
+      cart(){
+        return this.$store.getters.getCart
+      }
+    },
+    methods: {
+      removeFromCart(index) {
+        this.$store.commit('removeFromCart', index)
       }
     }
+  }
 </script>
-
-<style scoped>
-
-</style>
