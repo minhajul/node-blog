@@ -1,7 +1,6 @@
 const express = require('express'),
       router = express.Router(),
       apiController = require('../controllers/apiController'),
-      productController = require('../controllers/productController'),
       expressJWT = require('express-jwt');
 
 const JwtChecker = expressJWT({
@@ -9,12 +8,14 @@ const JwtChecker = expressJWT({
 });
 
 // router.get('/posts', JwtChecker, apiController.fetchPosts);
+
+// posts routes
 router.get('/posts', apiController.fetchPosts);
 router.get('/post/:id', apiController.postDetails);
 
-// Products routes
-router.get('/products', productController.fetchProducts);
-router.get('/product/:id', productController.productDetails);
-router.get('/create/product', productController.create);
+// products routes
+router.get('/products', apiController.fetchProducts);
+router.get('/product/:id', apiController.productDetails);
+router.get('/create/product', apiController.create);
 
 module.exports = router;
