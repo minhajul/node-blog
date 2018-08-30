@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/pages/Home'
-import Posts from '@/components/pages/Posts'
-import PostDetails from '@/components/pages/PostDetails'
-import Chat from '@/components/pages/Chat'
+import Posts from '@/components/pages/posts/Posts'
+import PostDetails from '@/components/pages/posts/PostDetails'
+import Chat from '@/components/pages/chat/Chat'
 import Products from '@/components/pages/shop/Products'
 import ProductDetails from '@/components/pages/shop/ProductDetails'
 

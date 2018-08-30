@@ -3,7 +3,7 @@
   <div class="row">
 
     <div class="col-md-6" v-for="post in posts">
-      <Single v-bind:post="post" :key="post._id"></Single>
+      <SinglePost v-bind:post="post" :key="post._id"></SinglePost>
     </div>
 
     <div class="col-md-12" v-if="errorMessage">{{ errorMessage }}</div>
@@ -14,11 +14,11 @@
 
 <script>
   import axios from 'axios';
-  import Single from '../Single';
+  import SinglePost from '../pages/posts/SinglePost';
   export default {
     name: 'Home',
     components:{
-      Single
+      SinglePost
     },
     data() {
       return {
