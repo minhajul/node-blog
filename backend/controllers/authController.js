@@ -8,55 +8,25 @@ const users = [
     {id: 3, email: "sohel@gmail.com", password: "123456"}
 ];
 
-exports.loginView = (req, res) => {
-    res.render('pages/auth/index');
-};
-
-exports.emailLogin = async (req, res) => {
-    const user = await User.findOne({email: req.body.email, password: req.body.password});
-
-    if (!user){
-        res.redirect('/auth/login');
-    }
-
-    req.session.user = user;
-
-    res.redirect('/');
-};
-
-
-exports.logout = async (req, res, next) => {
-    if (req.session) {
-        req.session.destroy((err) => {
-            if(err) {
-                return next(err);
-            }
-
-            return res.redirect('/');
-        });
-    }
-};
-
 exports.login = async (req, res) => {
     const schema = {
-        email : Joi.string().required(),
-        password : Joi.string().min(3).required()
+        email: Joi.string().required(),
+        password: Joi.string().min(3).required()
     };
 
     const result = Joi.validate(req.body, schema);
 
-    if(result.error){
-        return res.status(422).json({ errors: result.error.details});
+    if (result.error) {
+        return res.status(422).json({errors: result.error.details});
     }
 
-    const email = req.body.email,
-          password = req.body.password;
+    const {email, password} = req.body;
 
     const user = users.find(user => {
         return user.email === email && user.password === password;
     });
 
-    if (!user){
+    if (!user) {
         sendErrorResponse(res, 500, 'failure', 'User not found. Please try again!');
     }
 
@@ -68,6 +38,7 @@ exports.login = async (req, res) => {
     res.status(200)
         .send({
             'status': 'success',
+            user,
             'token': token
         });
 };

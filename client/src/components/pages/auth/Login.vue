@@ -16,28 +16,40 @@
         <button type="submit" class="btn btn-primary pull-right" @click.prevent="login">Submit</button>
       </form>
     </div>
-
   </div>
 </template>
 
 <script>
-    export default {
-        name: "Login",
-      data(){
-          return{
-            email: '',
-            password: '',
-          }
-      },
-      methods: {
-          login(){
-            this.$store.commit('setToken', 'sdknakjdnakdjnadkjnadkjnad');
-            this.$store.commit('setToken', 'sdknakjdnakdjnadkjnadkjnad');
-          }
+  import axios from 'axios';
+
+  export default {
+    name: "Login",
+    data() {
+      return {
+        email: '',
+        password: '',
+        errorMessage: ''
+      }
+    },
+    methods: {
+      login() {
+        const credentials = {
+          email: this.email,
+          password: this.password
+        };
+        axios.post('http://localhost:3000/api/v1/login', credentials)
+          .then(response => response.data)
+          .then(responseData => {
+            if (responseData.status === 'success') {
+              this.$store.commit('setUser', responseData.user);
+              this.$store.commit('setToken', responseData.token);
+
+            } else {
+              this.errorMessage = 'Something went wrong!'
+            }
+          })
+          .catch(error => this.errorMessage = 'Something went wrong! ' + error.message);
       }
     }
+  }
 </script>
-
-<style scoped>
-
-</style>

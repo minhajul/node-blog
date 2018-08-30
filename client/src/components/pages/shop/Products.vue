@@ -26,7 +26,10 @@
 
   export default {
     name: "Products",
-    components: {Cart, SingleProduct},
+    components: {
+      Cart,
+      SingleProduct
+    },
     data(){
       return {
         products: [],

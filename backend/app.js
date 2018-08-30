@@ -35,11 +35,9 @@ app.use(cors({
 
 // routes
 const index = require('./routes/index');
-const auth = require('./routes/auth');
 const api = require('./routes/api');
 
 app.use('/', index);
-app.use('/auth', auth);
 app.use('/api/v1', api);
 
 // catch 404 and forward to error handler
