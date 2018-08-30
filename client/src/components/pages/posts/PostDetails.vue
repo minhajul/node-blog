@@ -28,15 +28,15 @@
     },
     mounted(){
       axios.get('http://localhost:3000/api/v1/post/'+ this.$route.params.id)
-        .then(response => response)
+        .then(response => response.data)
         .then(responseData => {
-          if (responseData.data.status === 'success'){
-            this.post = responseData.data.post;
+          if (responseData.status === 'success'){
+            this.post = responseData.data;
           }else{
             this.errorMessage = 'No post found'
           }
         })
-        .catch(error => this.errorMessage = 'No post found'+ error.message);
+        .catch(error => this.errorMessage = 'No post found ' + error.message);
     }
   }
 </script>

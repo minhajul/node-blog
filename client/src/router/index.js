@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/pages/Home'
+import Home from '@/components/pages/home/Home'
 import Posts from '@/components/pages/posts/Posts'
 import PostDetails from '@/components/pages/posts/PostDetails'
 import Chat from '@/components/pages/chat/Chat'

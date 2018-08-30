@@ -35,15 +35,15 @@
     },
     mounted(){
       axios.get('http://localhost:3000/api/v1/products')
-        .then(response => response)
+        .then(response => response.data)
         .then(responseData => {
-          if (responseData.data.status === 'success'){
-            this.products = responseData.data.products;
+          if (responseData.status === 'success'){
+            this.products = responseData.data;
           }else{
-            this.errorMessage = 'No post found'
+            this.errorMessage = 'No products found'
           }
         })
-        .catch(error => this.errorMessage = 'No post found'+ error.message);
+        .catch(error => this.errorMessage = 'No products found ' + error.message);
     }
   }
 </script>

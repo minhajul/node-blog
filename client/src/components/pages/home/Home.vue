@@ -13,8 +13,10 @@
 </template>
 
 <script>
+
   import axios from 'axios';
-  import SinglePost from '../pages/posts/SinglePost';
+  import SinglePost from '../posts/SinglePost';
+
   export default {
     name: 'Home',
     components:{
@@ -26,17 +28,18 @@
           errorMessage: null
       }
     },
+
     mounted(){
          axios.get('http://localhost:3000/api/v1/posts')
-          .then(response => response)
+          .then(response => response.data)
           .then(responseData => {
-              if (responseData.data.status === 'success'){
-                this.posts = responseData.data.posts;
+              if (responseData.status === 'success'){
+                this.posts = responseData.data;
               }else{
                 this.errorMessage = 'No post found'
               }
           })
-           .catch(error => this.errorMessage = 'No post found'+ error.message);
+          .catch(error => this.errorMessage = 'No post found ' + error.message);
     }
   }
 </script>
