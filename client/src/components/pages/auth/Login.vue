@@ -21,6 +21,7 @@
 
 <script>
   import axios from 'axios';
+  import AuthService from '@/services/auth';
 
   export default {
     name: "Login",
@@ -37,13 +38,14 @@
           email: this.email,
           password: this.password
         };
-        axios.post('http://localhost:3000/api/v1/login', credentials)
+        AuthService.login(credentials)
           .then(response => response.data)
           .then(responseData => {
             if (responseData.status === 'success') {
               this.$store.commit('setUser', responseData.user);
               this.$store.commit('setToken', responseData.token);
-
+              this.email = '';
+              this.password = '';
             } else {
               this.errorMessage = 'Something went wrong!'
             }
