@@ -5,12 +5,13 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const fs = require('fs');
+const config = require('./config/database');
 
 const app = express();
 
 app.listen(3000, () => console.log('App is running on port: 3000'));
 
-mongoose.connect('mongodb://localhost:27017/blogs')
+mongoose.connect(config.mongodb.url)
     .then(() => console.log('Connected to Mongodb'))
     .catch((error) => console.error('Error while connecting to mongodb'));
 
