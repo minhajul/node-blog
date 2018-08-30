@@ -21,7 +21,7 @@
           <label for="message">Message:</label>
           <input type="text" v-model="message" class="form-control">
         </div>
-        <button type="submit" class="btn btn-success">Send</button>
+        <button type="submit" @click.prevent="sendMessage" class="btn btn-success">Send</button>
       </form>
     </div>
   </div>
@@ -37,13 +37,11 @@
         user: '',
         message: '',
         messages: [],
-        socket: io('localhost:3000')
+        socket: io('localhost:3001')
       }
     },
     methods: {
-      sendMessage(e) {
-        e.preventDefault();
-
+      sendMessage(){
         this.socket.emit('SEND_MESSAGE', {
           user: this.user,
           message: this.message
@@ -52,8 +50,13 @@
       }
     },
     mounted() {
-      this.socket.on('MESSAGE', (data) => {
-        this.messages.push(data);
+      this.socket.on('MESSAGES', (data) => {
+        this.messages = data;
+      });
+
+      this.socket.on('MESSAGE', (message) => {
+        console.log(message);
+        this.messages.push(message);
       });
     }
   }
