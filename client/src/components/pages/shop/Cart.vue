@@ -2,6 +2,8 @@
   <div class="cart-area">
     <h2>Cart</h2>
 
+    <hr>
+
     <p v-if="cart.length === 0">
       Your cart is empty!
     </p>

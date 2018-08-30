@@ -4,7 +4,8 @@ import Home from '@/components/pages/Home'
 import Posts from '@/components/pages/Posts'
 import PostDetails from '@/components/pages/PostDetails'
 import Chat from '@/components/pages/Chat'
-import Shop from '@/components/pages/Shop'
+import Products from '@/components/pages/shop/Products'
+import ProductDetails from '@/components/pages/shop/ProductDetails'
 
 Vue.use(Router);
 
@@ -28,8 +29,13 @@ export default new Router({
     },
     {
       path: '/shop',
-      name: 'shop',
-      component: Shop,
+      name: 'products',
+      component: Products,
+    },
+    {
+      path: '/product/:id',
+      name: 'productDetails',
+      component: ProductDetails,
     },
     {
       path: '/chat',
