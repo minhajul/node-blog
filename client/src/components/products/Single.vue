@@ -14,10 +14,8 @@
 
       <div class="card-footer">
         <span class="float-left">${{ product.price }}</span>
-        <span class="float-right">
-          <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye mr-3"></i></a>
-          <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-        </span>
+
+        <button class="btn btn-primary pull right" @click.prevent="addToCart(product)">Add to Cart</button>
       </div>
     </div>
   </div>
@@ -27,6 +25,16 @@
   export default {
     name: "Single",
     props: ['product'],
+    data(){
+      return {
+        errorMessage: ''
+      }
+    },
+    methods:{
+      addToCart(product){
+         this.$store.commit('addToCart', product)
+      }
+    }
   }
 </script>
 
