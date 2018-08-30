@@ -8,14 +8,12 @@
     </div>
 
     <div class="card-body card-body-cascade text-center">
-      <h4 class="card-title"><strong><a href="">Product name</a></strong></h4>
+      <h4 class="card-title"><strong><a href="">{{ product.title }}</a></strong></h4>
 
-      <p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
-        et voluptates.
-      </p>
+      <p class="card-text">{{ product.description }}</p>
 
       <div class="card-footer">
-        <span class="float-left">49$</span>
+        <span class="float-left">${{ product.price }}</span>
         <span class="float-right">
           <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye mr-3"></i></a>
           <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -27,7 +25,8 @@
 
 <script>
   export default {
-    name: "Single"
+    name: "Single",
+    props: ['product'],
   }
 </script>
 

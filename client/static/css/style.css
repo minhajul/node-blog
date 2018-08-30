@@ -24,3 +24,7 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
+
+.card{
+  margin-bottom: 20px;
+}
