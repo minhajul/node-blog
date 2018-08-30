@@ -1,26 +1,24 @@
 <template>
 
   <div class="row">
-
     <div class="col-md-12">
-        <Single v-bind:post="post" :key="post._id"></Single>
+        <SinglePost v-bind:post="post" :key="post._id"></SinglePost>
 
       <div class="error-message" v-if="errorMessage">
          {{ errorMessage }}
       </div>
     </div>
-
   </div>
 
 </template>
 
 <script>
   import axios from 'axios';
-  import Single from '../Single';
+  import SinglePost from './SinglePost';
   export default {
     name: 'PostDetails',
     components:{
-      Single
+      SinglePost
     },
     data() {
       return {

@@ -7,19 +7,19 @@ exports.fetchProducts = async (req, res) => {
         limit: 10
     };
 
-    const posts = await Product.find({}, {}, query).sort({_id: -1}).select({_id:1, title:1, description:1, price: 1, image:1, created_at:1});
+    const products = await Product.find({}, {}, query).sort({_id: -1}).select({_id:1, title:1, description:1, price: 1, image:1, created_at:1});
 
     res.json({
         status: 'success',
-        posts
+        products
     })
 };
 
 exports.productDetails = async (req, res) => {
-    const post = await Product.findById(req.params.id).select({_id:1, title:1, description:1, price: 1, image:1, created_at:1});
+    const product = await Product.findById(req.params.id).select({_id:1, title:1, description:1, price: 1, image:1, created_at:1});
     res.json({
         status: 'success',
-        post
+        product
     })
 };
 
