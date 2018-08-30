@@ -6,6 +6,8 @@ import PostDetails from '@/components/pages/posts/PostDetails'
 import Chat from '@/components/pages/chat/Chat'
 import Products from '@/components/pages/shop/Products'
 import ProductDetails from '@/components/pages/shop/ProductDetails'
+import Register from '@/components/pages/auth/Register'
+import Login from '@/components/pages/auth/Login'
 
 Vue.use(Router);
 
@@ -41,6 +43,16 @@ export default new Router({
       path: '/chat',
       name: 'chat',
       component: Chat,
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
     }
   ]
 })

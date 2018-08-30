@@ -1,14 +1,12 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import App from './App'
 import router from './router'
-import { shop } from './store/shop';
+import store  from './store/index';
+import { sync } from 'vuex-router-sync';
 
 Vue.config.productionTip = false;
 
-Vue.use(Vuex);
-
-const store = new Vuex.Store(shop);
+sync(store, router);
 
 new Vue({
   el: '#app',
