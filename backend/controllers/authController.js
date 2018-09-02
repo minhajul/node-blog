@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
     }, "my-secret-keys", {expiresIn: "3 hours"});
 
     res.status(200)
-        .send({
+        .json({
             'status': 'success',
             user,
             'token': token
@@ -45,7 +45,7 @@ exports.login = async (req, res) => {
 
 function sendErrorResponse(res, statusCode, status, message) {
     res.status(statusCode)
-        .send({
+        .json({
             'status': status,
             'message': message
         });
