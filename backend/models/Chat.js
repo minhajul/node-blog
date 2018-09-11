@@ -3,12 +3,8 @@ const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 const chatSchema = new Schema({
-    message: {
-        type: String
-    },
-    user: {
-        type: String
-    },
+    message:  String,
+    username: String,
     created_at: {
         type: Date,
         default: Date.now()

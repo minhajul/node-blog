@@ -3,9 +3,9 @@ const Joi = require('joi');
 const User = require('../models/User');
 
 const users = [
-    {id: 1, email: "minhaj@gmail.com", password: "123456"},
-    {id: 2, email: "minhajul@maya.com.bd", password: "123456"},
-    {id: 3, email: "sohel@gmail.com", password: "123456"}
+    {id: 1, username:'minhaj', email: "minhaj@gmail.com", password: "123456"},
+    {id: 2, username:'nai', email: "minhajul@maya.com.bd", password: "123456"},
+    {id: 3, username:'nai', email: "sohel@gmail.com", password: "123456"}
 ];
 
 exports.login = async (req, res) => {

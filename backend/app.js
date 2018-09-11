@@ -70,10 +70,15 @@ io.on('connection', async (socket) => {
     io.emit('MESSAGES', messages);
 
     socket.on('SEND_MESSAGE', async (data) => {
+
+        // console.log(data.user.username);
+
         const newChat = new Chat({
             message: data.message,
-            user: data.user
+            username: data.user.username
         });
+
+        console.log(newChat);
 
         newChat.save((err, result) => {
             if (!err){

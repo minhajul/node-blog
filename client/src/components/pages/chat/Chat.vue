@@ -7,13 +7,15 @@
       </div>
       <div class="card-body">
         <div class="messages" v-for="(msg, index) in messages" :key="index">
-          <p><span class="font-weight-bold">{{ msg.user }}: </span>{{ msg.message }}</p>
+           <p>
+             <span class="font-weight-bold">{{ msg.username }}: </span>{{ msg.message }}
+           </p>
         </div>
       </div>
     </div>
     <div class="card-footer">
       <form @submit.prevent="sendMessage">
-        <div class="gorm-group">
+        <div class="gorm-group" v-if="!$store.state.isUserLoggedIn">
           <label for="user">User:</label>
           <input type="text" v-model="user" class="form-control">
         </div>
@@ -40,10 +42,18 @@
         socket: io('localhost:3001')
       }
     },
+
+    computed: {
+      loggedinUser() {
+        return this.$store.getters.getUser;
+      }
+    },
     methods: {
       sendMessage(){
+        const user = this.$store.getters.getUser;
+
         this.socket.emit('SEND_MESSAGE', {
-          user: this.user,
+          user: user,
           message: this.message
         });
         this.message = ''
@@ -55,7 +65,6 @@
       });
 
       this.socket.on('MESSAGE', (message) => {
-        console.log(message);
         this.messages.push(message);
       });
     }
