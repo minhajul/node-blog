@@ -19,6 +19,10 @@ export default new Vuex.Store({
   getters: {
     getCart(state) {
       return state.cart;
+    },
+
+    getTotal(state){
+       return state.cart.reduce( (total, item) => total + parseInt(item.price * item.quantity), 0);
     }
   },
 
@@ -34,7 +38,14 @@ export default new Vuex.Store({
     },
 
     addToCart(state, payload) {
-      state.cart.push(payload);
+      const product = state.cart.find(item => item._id === payload._id);
+
+      if (typeof product !== 'undefined'){
+        product.quantity++;
+      }else{
+        payload.quantity = 1;
+        state.cart.push(payload);
+      }
     },
 
     removeFromCart(state, payload) {

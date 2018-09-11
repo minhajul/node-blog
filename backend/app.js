@@ -13,7 +13,7 @@ app.listen(3000, () => console.log('App is running on port: 3000'));
 
 mongoose.connect(config.mongodb.url)
     .then(() => console.log('Connected to Mongodb'))
-    .catch((error) => console.error('Error while connecting to mongodb'));
+    .catch((error) => console.error('Error while connecting to mongodb '+ error.message));
 
 // Load all files in models dir
 fs.readdirSync(__dirname + '/models').forEach(function(filename) {

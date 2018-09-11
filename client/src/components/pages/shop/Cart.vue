@@ -21,11 +21,7 @@
           <td>{{ item.title }}</td>
           <td>${{ item.price }}</td>
           <td>
-            <div class="quantity">
-              <input type="button" value="+" class="plus">
-              <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty" size="4">
-              <input type="button" value="-" class="minus">
-            </div>
+            {{ item.quantity }}
           </td>
           <td>
             <button type="button" class="btn btn-outline-danger btn-xs" @click.prevent="removeFromCart(index)">
@@ -35,17 +31,36 @@
         </tr>
         </tbody>
       </table>
+
+      <hr>
+
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>${{ total }}</td>
+        </tr>
+        </tbody>
+      </table>
+
     </div>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
   export default {
     name: "Cart",
-    computed:{
-      cart(){
-        return this.$store.getters.getCart
-      }
+    computed: {
+      ...mapGetters({
+        cart: 'getCart',
+        total: 'getTotal'
+      })
     },
     methods: {
       removeFromCart(index) {
