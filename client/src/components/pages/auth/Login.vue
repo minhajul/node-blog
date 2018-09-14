@@ -52,6 +52,7 @@
               this.email = '';
               this.password = '';
               this.errorMessage = '';
+              this.$router.push('/')
             } else {
               this.errorMessage = 'Something went wrong!'
             }
