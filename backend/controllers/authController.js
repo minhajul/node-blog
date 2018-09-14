@@ -1,33 +1,21 @@
 const jwt = require('jsonwebtoken');
-const Joi = require('joi');
 const User = require('../models/User');
-
-const users = [
-    {id: 1, username:'minhaj', email: "minhaj@gmail.com", password: "123456"},
-    {id: 2, username:'nai', email: "minhajul@maya.com.bd", password: "123456"},
-    {id: 3, username:'nai', email: "sohel@gmail.com", password: "123456"}
-];
+const bcrypt = require('bcrypt');
 
 exports.login = async (req, res) => {
-    const schema = {
-        email: Joi.string().required(),
-        password: Joi.string().min(3).required()
-    };
-
-    const result = Joi.validate(req.body, schema);
-
-    if (result.error) {
-        return res.status(422).json({errors: result.error.details});
-    }
 
     const {email, password} = req.body;
 
-    const user = users.find(user => {
-        return user.email === email && user.password === password;
-    });
+    const user = await User.findOne({email: email});
 
     if (!user) {
         sendErrorResponse(res, 500, 'failure', 'User not found. Please try again!');
+    }
+
+    const isMatch = checkPassword(user, password);
+
+    if (!isMatch){
+        sendErrorResponse(res, 500, 'failure', 'Password does not match!');
     }
 
     const token = jwt.sign({
@@ -38,10 +26,30 @@ exports.login = async (req, res) => {
     res.status(200)
         .json({
             'status': 'success',
-            user,
+            'user': user,
             'token': token
         });
 };
+
+
+exports.register = async (req, res) => {
+    try {
+        const {username, email, password} = req.body;
+
+        const user = new User({
+            username, email, password
+        });
+        const newUser = await user.save();
+        res.send(newUser);
+    }catch (e) {
+        res.send(e.message);
+    }
+
+};
+
+function checkPassword(user, password) {
+    return bcrypt.compareSync(password, user.password);
+}
 
 function sendErrorResponse(res, statusCode, status, message) {
     res.status(statusCode)

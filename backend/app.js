@@ -71,8 +71,6 @@ io.on('connection', async (socket) => {
 
     socket.on('SEND_MESSAGE', async (data) => {
 
-        // console.log(data.user.username);
-
         const newChat = new Chat({
             message: data.message,
             username: data.user.username
