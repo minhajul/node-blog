@@ -22,5 +22,6 @@ router.get('/create/product', apiController.create);
 
 // auth routes
 router.post('/login', authController.login);
+router.post('/register', authController.register);
 
 module.exports = router;
