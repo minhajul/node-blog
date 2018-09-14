@@ -9,13 +9,13 @@ exports.login = async (req, res) => {
     const user = await User.findOne({email: email});
 
     if (!user) {
-        sendErrorResponse(res, 500, 'failure', 'User not found. Please try again!');
+        sendErrorResponse(res, 200, 'failure', 'User not found. Please try again!');
     }
 
     const isMatch = checkPassword(user, password);
 
     if (!isMatch){
-        sendErrorResponse(res, 500, 'failure', 'Password does not match!');
+        sendErrorResponse(res, 200, 'failure', 'Password does not match!');
     }
 
     const token = jwt.sign({

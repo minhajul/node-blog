@@ -3,6 +3,11 @@
     <div class="col-8">
       <h2>Login</h2>
       <hr>
+
+      <div v-if="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+
       <form>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
@@ -46,6 +51,7 @@
               this.$store.commit('setToken', responseData.token);
               this.email = '';
               this.password = '';
+              this.errorMessage = '';
             } else {
               this.errorMessage = 'Something went wrong!'
             }
